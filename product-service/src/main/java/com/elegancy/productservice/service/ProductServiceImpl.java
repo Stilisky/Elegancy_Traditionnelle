@@ -27,7 +27,7 @@ public class ProductServiceImpl implements ProductService {
         List<Product> products = productRepository.findAll();
         List<ProductResponseDTO> responseDTOS = new ArrayList<>();
         products.forEach(product ->
-                responseDTOS.add(productMapper.fromProduct(product)));
+                responseDTOS.add(productMapper.productToProductResponseDto(product)));
         return responseDTOS;
     }
 
@@ -39,17 +39,17 @@ public class ProductServiceImpl implements ProductService {
         }catch (Exception e){
             throw new ProductNotFoundException("L'article demandé n'existe pas!");
         }
-        return productMapper.fromProduct(prod);
+        return productMapper.productToProductResponseDto(prod);
     }
 
     @Override
     public ProductResponseDTO saveProduct(ProductRequestDTO productRequestDTO) {
-        Product product = productMapper.fromProductResponseDTO(productRequestDTO);
+        Product product = productMapper.productResponseDtoToProduct(productRequestDTO);
         if(productRepository.findByName(product.getName()) != null){
             throw new ProductAlreadyExistException("Ce t'article existe déjà!");
         }
         Product prodsave = productRepository.save(product);
-        return productMapper.fromProduct(prodsave);
+        return productMapper.productToProductResponseDto(prodsave);
     }
 
     @Override
@@ -70,7 +70,7 @@ public class ProductServiceImpl implements ProductService {
             product.setQuantity(productRequestDTO.getQuantity());
         }
 
-        return productMapper.fromProduct(product);
+        return productMapper.productToProductResponseDto(product);
     }
 
     @Override

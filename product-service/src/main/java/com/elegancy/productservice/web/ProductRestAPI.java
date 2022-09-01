@@ -21,7 +21,7 @@ public class ProductRestAPI {
         return productService.allProducts();
     }
     @GetMapping(path = "/products/{id}")
-    public ProductResponseDTO getProduct(@PathVariable Long id){
+    public ProductResponseDTO getProductById(@PathVariable Long id){
         return productService.getProduct(id);
     }
     @PostMapping(path = "/products")
