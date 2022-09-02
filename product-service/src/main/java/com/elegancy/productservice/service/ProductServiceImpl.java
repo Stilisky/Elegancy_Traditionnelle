@@ -18,8 +18,6 @@ import java.util.List;
 @Transactional
 public class ProductServiceImpl implements ProductService {
     @Autowired
-    private ProductMapper productMapper;
-    @Autowired
     private ProductRepository productRepository;
 
     @Override
@@ -27,7 +25,7 @@ public class ProductServiceImpl implements ProductService {
         List<Product> products = productRepository.findAll();
         List<ProductResponseDTO> responseDTOS = new ArrayList<>();
         products.forEach(product ->
-                responseDTOS.add(productMapper.productToProductResponseDto(product)));
+                responseDTOS.add(ProductMapper.productToProductResponseDto(product)));
         return responseDTOS;
     }
 
@@ -39,17 +37,17 @@ public class ProductServiceImpl implements ProductService {
         }catch (Exception e){
             throw new ProductNotFoundException("L'article demandé n'existe pas!");
         }
-        return productMapper.productToProductResponseDto(prod);
+        return ProductMapper.productToProductResponseDto(prod);
     }
 
     @Override
     public ProductResponseDTO saveProduct(ProductRequestDTO productRequestDTO) {
-        Product product = productMapper.productResponseDtoToProduct(productRequestDTO);
+        Product product = ProductMapper.productResponseDtoToProduct(productRequestDTO);
         if(productRepository.findByName(product.getName()) != null){
             throw new ProductAlreadyExistException("Ce t'article existe déjà!");
         }
         Product prodsave = productRepository.save(product);
-        return productMapper.productToProductResponseDto(prodsave);
+        return ProductMapper.productToProductResponseDto(prodsave);
     }
 
     @Override
@@ -70,7 +68,7 @@ public class ProductServiceImpl implements ProductService {
             product.setQuantity(productRequestDTO.getQuantity());
         }
 
-        return productMapper.productToProductResponseDto(product);
+        return ProductMapper.productToProductResponseDto(product);
     }
 
     @Override
