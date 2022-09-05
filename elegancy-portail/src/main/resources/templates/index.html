@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml" th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>ELEGANCY TRADITIONNELLE</title>
+</head>
+<body>
+	<h2>Présentation: </h2>
+	<p>Bienvenue sur notre Web Store nous disposons des produits pour révèler la beauté naturelle que la nature vous a octroyé!</p>
+	<h2>Nos Produits</h2>
+	<table>
+		<tr th:each="product : ${products}">
+			<td>
+				<div>
+					<img th:src="${product.image}">
+				</div>
+				<span>
+					Titre: <h2 th:text="${product.name}">titre</h2>
+				</span>
+				<span>
+					Prix: <h2 th:text="${product.price}">Price</h2>
+				</span>
+				<a th:href="@{/productDetails/{id}(id=${product.id})}">
+					<button>Détails</button>
+				</a>
+			</td>
+		</tr>
+	</table>
+</body>
+</html>
